@@ -21,7 +21,7 @@
 
 addon.name      = 'TitleInverter';	-- The name of the addon.
 addon.author    = 'Fel (Byrth)';	-- The name of the addon author.
-addon.version   = '1.01';			-- The version of the addon. 
+addon.version   = '1.02';			-- The version of the addon. 
 addon.desc      = 'Shows obtained or missing Titles from Title NPCs.';   	-- (Optional) The description of the addon.
 addon.link      = 'https://ashitaxi.com/';      							-- (Optional) The link to the addons homepage.
 
@@ -74,12 +74,6 @@ ashita.events.register('command', 'command_cb', function (cmd, nType)
 
     -- Block all related commands to this addon..
     cmd.blocked = true;
-
-    -- Handle: /titleinverter help - Shows the addon help.
-    if (#args == 2 and args[2]:any('help')) then
-        print_help(false);
-        return false;
-    end
 
     local args = cmd.command:args()
     

@@ -21,7 +21,7 @@
 
 addon.name      = 'TitleInverter';	-- The name of the addon.
 addon.author    = 'Fel (Byrth)';	-- The name of the addon author.
-addon.version   = '1.00';			-- The version of the addon. 
+addon.version   = '1.01';			-- The version of the addon. 
 addon.desc      = 'Shows obtained or missing Titles from Title NPCs.';   	-- (Optional) The description of the addon.
 addon.link      = 'https://ashitaxi.com/';      							-- (Optional) The link to the addons homepage.
 
@@ -65,13 +65,24 @@ npc_names = {
 }
 
 ashita.events.register('command', 'command_cb', function (cmd, nType)
-    local args = cmd.command:args()
-	local command = string.lower(args[1])
-    
-    if command ~= '/titleinverter' then
-        return false
+
+    -- Parse the command arguments..
+    local args = cmd.command:args();
+    if (#args == 0 or not args[1]:any('/titleinverter','/tinvert')) then
+        return false;
     end
-	
+
+    -- Block all related commands to this addon..
+    cmd.blocked = true;
+
+    -- Handle: /titleinverter help - Shows the addon help.
+    if (#args == 2 and args[2]:any('help')) then
+        print_help(false);
+        return false;
+    end
+
+    local args = cmd.command:args()
+    
 	local enabledMsg = chat.color1(2, "Enabled. ")  .. chat.message("NPCs will show missing titles.")
 	local disabledMsg = chat.color1(5, "Disabled. ")   .. chat.message("NPCs will show obtained titles.")
 	if (#args == 1) then
